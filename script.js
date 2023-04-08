@@ -13,7 +13,7 @@ toolbox_input.value = "1";
 let imgs;
 let activepage = 0;
 
-toolbox_input.addEventListener("focusout", x=> console.log(x));
+toolbox_input.addEventListener("focusout", manualPage);
 
 let touchpoints = {
   posx0: -1,
@@ -22,13 +22,29 @@ let touchpoints = {
   timestamp1: -1,
 };
 
+function manualPage() {
+  if (!imgsrc[toolbox_input.value-1]) {
+    toolbox_input.value = activepage+1;
+    return;
+  }
+  activepage = toolbox_input.value -1;
+  for (all of imgs){
+    all.style.left = "0px";
+  }
+  for (i=0; i<activepage; i++){
+    imgs[99-i].style.left = `${-width}px`;
+  }
+  loadPage();
+}
+
 function turnPage(index) {
-  if (activepage+index<0 || activepage+index>imgsrc.length){
+  console.log(arguments[2]);
+  if (activepage+index<0 || activepage+index>imgsrc.length-1){
     putPage(imgs[99-activepage], 0);
     return;
   }
   if (index>0){
-    putPage(imgs[99-activepage], width);
+    putPage(imgs[99-activepage], -width);
     activepage++;
   }
   if (index<0){
@@ -79,18 +95,19 @@ function handleTouchStart(event) {
   // pees[1].style.color = "black";
   touchpoints.posx0 = event.touches[0].clientX;
   touchpoints.timestamp0 = event.timeStamp;
+  if (event.touches[1]) touchpoints.posx0 = -1;
 }
 
 function handleTouchEnd(event) {
   let x = touchpoints.posx1 - touchpoints.posx0;
   let t = touchpoints.timestamp1 - touchpoints.timestamp0;
-  if (touchpoints.posx1 == -1) return;
+  if (touchpoints.posx1 == -1 || touchpoints.posx0 == -1) return;
   // pees[1].style.color = "red";
   // pees[0].style.color = "black";
   // pees[2].textContent = `V = ${x/t}`;
   // pees[3].textContent = `X = ${x}`;
-  if (x > width/3 || x/t > 0.4) turnPage(+1);
-  else if (-x > -width/3 || -x/t > -0.4) turnPage(-1);
+  if (absVal(x)>width/2 || absVal(x/t)>0.5)
+    turnPage(-x/absVal(x));
   else putPage(imgs[99-activepage], 0);
   touchpoints.posx0 = -1;
   touchpoints.posx1 = -1;
