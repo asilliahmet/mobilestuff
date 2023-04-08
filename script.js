@@ -116,6 +116,7 @@ function handleTouchEnd(event) {
 }
 
 function handleTouchMove(event) {
+  if (event.touches[1]) return;
   touchpoints.posx1 = event.touches[0].clientX;
   touchpoints.timestamp1 = event.timeStamp;
   if (event.target.parentElement == catalouge_container){
