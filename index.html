@@ -7,11 +7,24 @@
   <title>Katalog</title>
   <script src="./sources.js"></script>
   <script src="./script.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <p>TOUCH START</p>
+  <div id="midpoint"></div>
+  <!-- <p>TOUCH START</p>
   <p>TOUCH END</p>
   <p>V=</p>
-  <p>X=</p>
+  <p>X=</p> -->
+  <div class="catalouge-container">
+  </div>
+  <div class="toolbox">
+    <i id="majlogo" onclick="window.location.href = `https://majolika.com.tr/`;">M</i>
+    <i id="leftarrow" onclick="turnPage(-1)"></i>
+    <input type="text">
+    <div>/</div>
+    <div>100</div>
+    <i id="rightarrow" onclick="turnPage(1)"></i>
+    <i id="downloadicon">D</i>
+  </div>
 </body>
 </html>
